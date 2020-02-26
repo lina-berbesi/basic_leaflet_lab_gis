@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+	<!-- Leaflet easily display map tiles - partioned sections or snippets render tile by tile-->
+	<!-- GeoJSON for storing spatial geometries (vectors)-->
+	<head>
+
+		<title>Lina Berbesi ID --632735832</title>
+		<meta charset="utf-8" />
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <link rel="stylesheet" href="https://unpkg.com/leaflet@0.7.7/dist/leaflet.css" />
+	    <script src="https://unpkg.com/leaflet@0.7.7/dist/leaflet.js"></script>
+		<style>
+		.leaflet-popup-content-wrapper {
+		background-color: white		   }
+		
+		.leaflet-popup-tip {
+        background: green  }
+
+		.right {float:right; margin: 0 10.5%; width: 30%;} 
+		
+		p {inline;font-family: 'Open Sans Condensed', sans-serif;}
+		
+		h1 { color: #111; font-family: 'Open Sans Condensed', sans-serif; font-size: 40px; font-weight: 600; line-height: 40px; margin: 0 0 0; padding: 10px 10px; text-align: center; text-transform: uppercase; }
+		
+		h6 { color: #808080; font-family: 'Open Sans Condensed', sans-serif; font-size: 20px; font-weight: 100; line-height: 10px; margin: 0 0 0; padding: 10px 10px; text-align: center;}
+		
+		</style>
+		</head>
+
+		<body>
+		
+		<h1> 2018's Holiday Map</h1>
+		
+		<h6> by Lina Berbesi ID --632735832</h6>
+			
+		<div class="right" style="line-height: 350px">
+			<p >This is where i spent my holidays last year.</p>
+		</div>
+			
+			
+			<!-- Map zoom-->
+			<div id="map" class="left" style="width: 600px; height: 400px;"></div>
+
+			<!--Coordinates: latitude an longitude in decimal degrees, plus default zoom level (google earth)-->
+			<script>
+	         var map = L.map('map').setView([10.96833, -73.91555], 9);
+
+<!--Map style-->
+				<!-- This style is 	CartoDB Positron-->
+	L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
+		attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+	}).addTo(map);
+
+<!-- Define the polygon in Google Earth and export it as KML for then converting it to GeoJSON-->
+				<!-- For the conversion use a slick API: geojson.io-->
+				<!-- Spatial Geometry encoded in GeoJSON-->
+
+ var sierra_poly={
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -74.09790738722371,
+              10.57161074916699,
+              0
+            ],
+            [
+              -73.60103778733074,
+              10.6083200192323,
+              0
+            ],
+            [
+              -73.57550495463438,
+              11.30766225099697,
+              0
+            ],
+            [
+              -74.2334887516559,
+              11.40643803221147,
+              0
+            ],
+            [
+              -74.27877695399079,
+              11.07444623688763,
+              0
+            ],
+            [
+              -74.09790738722371,
+              10.57161074916699,
+              0
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+};
+
+
+L.geoJson(sierra_poly,{color:'#39c6aa',fillColor:'#00ffcc',weigth:1,opacity:0.15,fillOpacity:0.1}).addTo(map);
+
+				<!-- The icosn were taken from https://mapicons.mapsmarker.com/-->
+
+<!-- The image for the icon has to be saved in the same folder where the html is being stored-->
+var greenIcon = L.icon({
+	iconUrl: 'star-3.png',
+	iconSize: [32, 37], 
+	iconAnchor: [16, 37], 
+	popupAnchor: [-3, -30] 
+});
+
+		var marker=L.marker([10.71750, -73.90972],{icon: greenIcon}).addTo(map)
+			.bindPopup("<b>Magdalena Colombia</b><br />Area that contains the highest coastal mountain range in the world, the Sierra Nevada de Santa Marta.").openPopup();
+
+		var circle=L.circle([11.26250, -74.13416], 5500, {
+			color: 'green',
+			weigth:0.3,
+			fillColor: '#009900',
+			opacity:0.3,
+			fillOpacity: 0.5
+		}).addTo(map).bindPopup("Tayrona Park - Amazing natural park in Northen Colombia to hike, snorkel or dive.");
+
+        var shapestyle={
+		color:'#996633',
+		fillColor:'brown',
+		weigth:0.3,
+		opacity:0.3,
+		fillOpacity:0.5}
+
+		var polygon=L.polygon([
+			[10.91555, -73.70055],
+			[10.76194, -73.73916],
+			[10.76194, -73.64972],
+		],shapestyle).addTo(map).bindPopup("Sierra Nevada - One of the world's highest coastal mountain 5700 m.a.s.l.");
+
+        map.on('click', onMapClick);
+
+    </script>
+		</body>
+	</html>
